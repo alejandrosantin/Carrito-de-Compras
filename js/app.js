@@ -84,6 +84,27 @@ function eliminarCurso(e) {
     eliminarCursoLocalStorage(cursoId);
 }
 
+function exterminate(e) {
+    e.preventDefault();
+    const cursoId = e.target.getAttribute('data-id')
+    if (e.target.classList.contains('borrar-curso') && (articulosCarrito.every(curso => curso.cantidad > 1))) {
+        // aca tengo que bajar la cantidad
+        articulosCarrito.forEach(curso => {
+            if ((curso.cantidad > 1) && (curso.id === cursoId)) {
+                curso.cantidad--;
+                carritoHTML();
+            }
+        })
+        console.log("Hay mas de uno")
+    } else {
+        // aca elimino el curso        
+        articulosCarrito = articulosCarrito.filter(curso => curso.id !== cursoId);
+        carritoHTML();
+    }
+    eliminarCursoLocalStorage(cursoId);
+}
+
+
 //Elimina los cursos del carrito en el DOM
 function vaciarCarrito() {
     //Forma lenta
